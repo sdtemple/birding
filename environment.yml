@@ -1,0 +1,27 @@
+name: birdclef
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.12
+  - numpy>=2.1.3
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  - jupyter
+  - notebook
+  - pip
+  - scikit-learn
+  - pytorch
+  - tensorflow
+  - keras
+  - jax
+  - transformers
+  - statsmodels
+  - librosa
+  - soundfile
+  - cartopy
+  - zipfile
+  - snakemake
