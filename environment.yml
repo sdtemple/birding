@@ -13,6 +13,7 @@ dependencies:
   - jupyter
   - notebook
   - pip
+  - papermill
   - scikit-learn
   - pytorch
   - tensorflow

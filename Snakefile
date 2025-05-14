@@ -1,89 +1,147 @@
+import os
+# Create a folder named 'ran' if it doesn't exist
+os.makedirs("ran", exist_ok=True)
+os.makedirs("metadata", exist_ok=True)
+os.makedirs("arraydata", exist_ok=True)
 
+# Stop once we have these files
+rule all:
+    input:
+        "metadata/taxonomy.txt",
+        "metadata/species_map.png",
+        "metadata/train_metadata_nuanced.csv",
+        "audio_touched",
 
 # Run the initial filtering of metadata
 rule clean:
     input:
         notebook = "scripts/filter_metadata.ipynb",
+        file = "metadata/train_metadata.csv",
     output:
-        output_file = "metadata/train_metadata_cleaned.csv",
+        file = "metadata/train_metadata_cleaned.csv",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """papermill \
+            -p params_file {params.file} \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            {input.notebook} \
+            ran/filter_metadata.ipynb
+        """
+
+# Make a map of where observations were made
+rule globe:
+    input:
+        notebook = "scripts/species_map.ipynb",
+        file = "metadata/train_metadata.csv",
+    output:
+        file = "metadata/species_map.png",
+    shell:
+        """papermill \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            {input.notebook} \
+            ran/species_map.ipynb
+        """
 
 # Determine the top N most common species
 rule common:
     input:
         notebook = "scripts/common_species.ipynb",
-        cleaned = "metadata/train_metadata_cleaned.csv",
+        file = "metadata/train_metadata_cleaned.csv",
     output:
-        output_file = "metadata/common_species.txt",
+        file = "metadata/common_species.txt",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """papermill \
+            -p params_file {params.file} \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            {input.notebook} \
+            ran/common_species.ipynb
+        """
 
 # Extract geographically diverse species
 rule geography:
     input:
         notebook = "scripts/geography.ipynb",
-        cleaned = "metadata/train_metadata_cleaned.csv",
+        file = "metadata/train_metadata_cleaned.csv",
         common = "metadata/common_species.txt",
     output:
-        output_file = "metadata/geography.txt",
+        file = "metadata/geography.txt",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """papermill \
+            -p params_file {params.file} \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            -p common_file {input.common} \
+            {input.notebook} \
+            ran/geography.ipynb
+        """
 
 # Extract some species from all orders
 rule taxonomy:
     input:
         notebook = "scripts/taxonomy.ipynb",
-        cleaned = "metadata/train_metadata_cleaned.csv",
+        file = "metadata/train_metadata_cleaned.csv",
         common = "metadata/common_species.txt",
         geography = "metadata/geography.txt",
     output:
-        output_file = "metadata/taxonomy.txt",
+        file = "metadata/taxonomy.txt",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """papermill \
+            -p params_file {params.file} \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            -p common_file {input.common} \
+            -p geography_file {input.geography} \
+            {input.notebook} \
+            ran/taxonomy.ipynb
+        """
 
 # Extract data from type column
-rule featurizing:
+rule nuance:
     input:
-        notebook = "scripts/featurizing.ipynb",
-        cleaned = "metadata/train_metadata_cleaned.csv",
-        common = "metadata/common_species.txt",
-        geography = "metadata/geography.txt",
-        taxonomy = "metadata/taxonomy.txt",
+        notebook = "scripts/nuanced.ipynb",
+        file = "metadata/train_metadata_cleaned.csv",
     output:
-        output_file = "metadata/train_metadata_featurized.csv",
+        file = "metadata/train_metadata_nuanced.csv",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """papermill \
+            -p params_file {params.file} \
+            -p input_file {input.file} \
+            -p output_file {output.file} \
+            {input.notebook} \
+            ran/nuanced.ipynb
+        """
 
-# Unzip the audio files, which can be large
-rule unzip_audio:
+rule numerics:
     input:
-        # rename the notebook to the correct name in scripts
-        notebook = "scripts/unzip_audio.ipynb",
-        featurized = "metadata/train_metadata_featurized.csv",
-        common = "metadata/common_species.txt",
-        geography = "metadata/geography.txt",
-        taxonomy = "metadata/taxonomy.txt",
+        notebook = "scripts/numerics.ipynb",
     output:
-        # modify this to have at least one file
-        output_file = "train_audio/brnowl/XC154984.ogg",
+        file = "audio_touched",
     params:
-        params_file = "scripts/preprocessing.json",
+        file = "preprocessing.json",
     shell:
-        "papermill --parameters_file {params.params_file} {input.notebook} {output.output_file}"
+        """
+        touch audio_touched
+        papermill \
+            -p params_file {params.file} \
+            --log-output \
+            {input.notebook} \
+            ran/numerics.ipynb
+        """
 
-# Do nothing after at least Brown Owl file is unzipped
-rule all:
-    input:
-        "train_audio/brnowl/XC154984.ogg",
+# # Do nothing after at least Brown Owl file is unzipped
+# rule all:
+#     input:
+#         "train_audio/brnowl/XC154984.ogg",
 
