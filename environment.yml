@@ -22,7 +22,5 @@ dependencies:
   - transformers
   - statsmodels
   - librosa
-  - soundfile
   - cartopy
-  - zipfile
   - snakemake
