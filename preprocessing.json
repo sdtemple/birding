@@ -1,11 +1,11 @@
 {
-    "ogg_folder": "small/train_audio",
+    "ogg_folder": "birdclef-2022/train_audio",
     "metadata_file": "metadata/train_metadata.csv",
     "filter_metadata": {
         "num_contributions": "5",
         "thr_rating": "2.0"
     },
-    "nuanced_categories": {
+    "nuanced": {
         "prefix": "metadata/train_metadata",
         "min_count_species": "20",
         "min_scalar": "2.",
@@ -25,11 +25,15 @@
         "min_count_species": "10",
         "max_add_species": "3"
     },
-    "numeric_data": {
-        "prefix": "arraydata/",
-        "percentage": "2",
-        "num_peaks": "5",
-        "peak_width": "200",
-        "rift_prop": "0.2"
+    "tensorize": {
+        "alphabet": "ab",
+        "shift_std": "1.",
+        "frame_duration": "0.1",
+        "hop_scalar": "1.",
+        "rate_present": "0.01",
+        "num_seconds": "5.",
+        "max_kbps": "1_000.",
+        "n_mels": "32",
+        "sr_all": "32000"
     }
 }

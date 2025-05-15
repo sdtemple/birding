@@ -1,0 +1,7 @@
+input_folder: "birdclef-2022"
+sub_folder: "train_audio"
+metadata_file: "birdclef-2022/train_metadata.csv"
+taxonomy_file: "birdclef-2022/eBird_Taxonomy_v2021.csv"
+output_folder: "bc22"
+params_file: "preprocessing.json"
+one_obs: "brnowl/XC112875.ogg"
