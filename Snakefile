@@ -14,6 +14,8 @@ if not os.path.exists(input_folder):
     raise ValueError(f"Input folder {input_folder} does not exist.")
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
+if not os.path.exists("ran"):
+    os.makedirs("ran")
 
 # Stop once we have these files
 rule all:
