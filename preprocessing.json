@@ -1,13 +1,25 @@
 {
-    "ogg_folder": "birdclef-2022/train_audio",
-    "metadata_file": "metadata/train_metadata.csv",
+    "tensorize": {
+        "alphabet": "pqrst",
+        "shift_std": "1.",
+        "frame_duration": "0.1",
+        "hop_scalar": "1.",
+        "rate_present": "0.01",
+        "num_seconds": "5.",
+        "max_kbps": "1_000_000.",
+        "n_mels": "32",
+        "sr_all": "32000"
+    },
+    "recurrent_format": {
+        "seq_len": "10"
+    },
     "filter_metadata": {
-        "num_contributions": "5",
-        "thr_rating": "2.0"
+        "num_contributions": "0",
+        "thr_rating": "-0.5"
     },
     "nuanced": {
-        "prefix": "metadata/train_metadata",
-        "min_count_species": "20",
+        "prefix": "",
+        "min_count_species": "10",
         "min_scalar": "2.",
         "min_prop": "0.75"
     },
@@ -24,16 +36,5 @@
         "file": "metadata/eBird_Taxonomy_v2021.csv",
         "min_count_species": "10",
         "max_add_species": "3"
-    },
-    "tensorize": {
-        "alphabet": "ab",
-        "shift_std": "1.",
-        "frame_duration": "0.1",
-        "hop_scalar": "1.",
-        "rate_present": "0.01",
-        "num_seconds": "5.",
-        "max_kbps": "1_000.",
-        "n_mels": "32",
-        "sr_all": "32000"
     }
 }

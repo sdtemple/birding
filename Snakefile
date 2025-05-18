@@ -18,19 +18,19 @@ if not os.path.exists(output_folder):
 # Stop once we have these files
 rule all:
     input:
-        f'{output_folder}/train_metadata_cleaned.csv',
-        f'{output_folder}/train_metadata_nuanced.csv',
-        f'{output_folder}/common_species.txt',
-        f'{output_folder}/geography.txt',
-        f'{output_folder}/taxonomy.txt',
-        f'{output_folder}/species_map.png',
         f'{output_folder}/X_tensor.pt',
         f'{output_folder}/Y_tensor.pt',
         f'{output_folder}/birds.csv',
         f'{output_folder}/files.csv',
         f'{output_folder}/zc_rates.csv',
-        f'{output_folder}/orig_metadata.csv',
-        f'{output_folder}/orig_taxonomy.csv',
+        # f'{output_folder}/train_metadata_cleaned.csv',
+        # f'{output_folder}/train_metadata_nuanced.csv',
+        # f'{output_folder}/common_species.txt',
+        # f'{output_folder}/geography.txt',
+        # f'{output_folder}/taxonomy.txt',
+        # f'{output_folder}/species_map.png',
+        # f'{output_folder}/orig_metadata.csv',
+        # f'{output_folder}/orig_taxonomy.csv',
 
 rule tensorize:
     input:
@@ -51,6 +51,7 @@ rule tensorize:
             -p params_file {params.file} \
             -p input_folder {params.input_folder} \
             -p output_folder {params.output_folder} \
+            --log-output \
             {input.notebook} \
             ran/tensorize.ipynb
         """
@@ -72,6 +73,7 @@ rule clean:
             -p params_file {params.file} \
             -p input_file {input.file} \
             -p output_file {output.file} \
+            --log-output \
             {input.notebook} \
             ran/filter_metadata.ipynb
         """
@@ -87,6 +89,7 @@ rule globe:
         """papermill \
             -p input_file {input.file} \
             -p output_file {output.file} \
+            --log-output \
             {input.notebook} \
             ran/species_map.ipynb
         """
@@ -105,6 +108,7 @@ rule common:
             -p params_file {params.file} \
             -p input_file {input.file} \
             -p output_file {output.file} \
+            --log-output \
             {input.notebook} \
             ran/common_species.ipynb
         """
@@ -125,6 +129,7 @@ rule geography:
             -p input_file {input.file} \
             -p output_file {output.file} \
             -p common_file {input.common} \
+            --log-output \
             {input.notebook} \
             ran/geography.ipynb
         """
@@ -152,6 +157,7 @@ rule taxonomy:
             -p common_file {input.common} \
             -p geography_file {input.geography} \
             -p taxonomy_file {input.taxo} \
+            --log-output \
             {input.notebook} \
             ran/taxonomy.ipynb
         """
@@ -165,35 +171,14 @@ rule nuance:
         file = f'{output_folder.rstrip("/")}/train_metadata_nuanced.csv',
     params:
         file = f'{params_file}',
+        prefix = f'{output_folder.rstrip("/")}/train_metadata',
     shell:
         """
         papermill \
             -p params_file {params.file} \
             -p input_file {input.file} \
-            -p output_file {output.file} \
+            -p output_prefix {params.prefix} \
+            --log-output \
             {input.notebook} \
             ran/nuanced.ipynb
         """
-
-# rule numerics:
-#     input:
-#         notebook = "scripts/numerics.ipynb",
-#     output:
-#         file = "audio_touched",
-#     params:
-#         file = "preprocessing.json",
-#     shell:
-#         """
-#         touch audio_touched
-#         papermill \
-#             -p params_file {params.file} \
-#             --log-output \
-#             {input.notebook} \
-#             ran/numerics.ipynb
-#         """
-
-# # Do nothing after at least Brown Owl file is unzipped
-# rule all:
-#     input:
-#         "train_audio/brnowl/XC154984.ogg",
-
