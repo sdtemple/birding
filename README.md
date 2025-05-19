@@ -1,9 +1,11 @@
 
-#  SchMichigan Model
+#  SchMichigan Bird Acoustics Model
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This document provides a brief overview of creating models for the Kaggle BirdCLEF competitions, which focus on identifying bird species from audio recordings. There can be multiple birds calling in a time slice!
+
+<img src="the_state_of_michigan_with_a_bird.jpeg" align="center" width="300px"/>
 
 Competition URLs:
 - [2025](https://www.kaggle.com/competitions/birdclef-2025)
@@ -11,8 +13,6 @@ Competition URLs:
 - [2023](https://www.kaggle.com/competitions/birdclef-2023)
 - [2022](https://www.kaggle.com/competitions/birdclef-2022)
 - [2021](https://www.kaggle.com/competitions/birdclef-2021)
-
-<img src="the_state_of_michigan_with_a_bird.jpeg" align="center" width="300px"/>
 
 (The icon is courtesy of the Meta AI Llama model.)
 
