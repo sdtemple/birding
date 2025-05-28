@@ -20,19 +20,19 @@ if not os.path.exists("ran"):
 # Stop once we have these files
 rule all:
     input:
-        f'{output_folder}/X_tensor.pt',
-        f'{output_folder}/Y_tensor.pt',
-        f'{output_folder}/birds.csv',
-        f'{output_folder}/files.csv',
-        f'{output_folder}/zc_rates.csv',
-        # f'{output_folder}/train_metadata_cleaned.csv',
-        # f'{output_folder}/train_metadata_nuanced.csv',
-        # f'{output_folder}/common_species.txt',
-        # f'{output_folder}/geography.txt',
-        # f'{output_folder}/taxonomy.txt',
-        # f'{output_folder}/species_map.png',
-        # f'{output_folder}/orig_metadata.csv',
-        # f'{output_folder}/orig_taxonomy.csv',
+        # f'{output_folder}/X_tensor.pt',
+        # f'{output_folder}/Y_tensor.pt',
+        # f'{output_folder}/birds.csv',
+        # f'{output_folder}/files.csv',
+        # f'{output_folder}/zc_rates.csv',
+        f'{output_folder}/train_metadata_cleaned.csv',
+        f'{output_folder}/train_metadata_nuanced.csv',
+        f'{output_folder}/common_species.txt',
+        f'{output_folder}/geography.txt',
+        f'{output_folder}/taxonomy.txt',
+        f'{output_folder}/species_map.png',
+        f'{output_folder}/orig_metadata.csv',
+        f'{output_folder}/orig_taxonomy.csv',
 
 rule tensorize:
     input:
