@@ -22,5 +22,10 @@ dependencies:
   - transformers
   - statsmodels
   - librosa
+  - audiomentations
+  - soundfile
+  - pydub
+  - torchaudio
+  - timm
   - cartopy
   - snakemake
