@@ -12,18 +12,15 @@ dependencies:
   - seaborn
   - jupyter
   - notebook
-  - pip
+  - pip 
   - papermill
   - scikit-learn
   - pytorch
   - tensorflow
   - keras
-  - jax
   - transformers
   - statsmodels
   - librosa
-  - audiomentations
-  - soundfile
   - pydub
   - torchaudio
   - timm
