@@ -1,0 +1,22 @@
+# data
+feature_file: 'dbr/mel.npy'
+target_file: 'dbr/y.npy'
+model_file: 'test_vit.pth'
+
+# training
+batch_size: 200
+num_epochs: 100
+random_state: 42
+test_size: 0.2
+lr: 0.0001
+optimize: 'adam'
+
+# architecture
+patch_x: 32
+patch_y: 50
+hidden_size: 2
+num_hidden_layers: 12
+num_attention_heads: 6
+intermediate_size: 8
+hidden_dropout_prob: 0.5
+attention_probs_dropout_prob: 0.2

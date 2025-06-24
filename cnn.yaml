@@ -1,0 +1,26 @@
+# data
+feature_file: 'dbr/mel.npy'
+target_file: 'dbr/y.npy'
+model_file: 'test_cnn.pth'
+
+# training
+batch_size: 200
+num_epochs: 100
+random_state: 42
+test_size: 0.2
+lr: 0.0001
+optimize: 'adam'
+
+# architecture
+conv_num_layer: 3
+conv_size_layer: 16
+conv_kernel_size: 3
+conv_padding_size: 1
+conv_stride_size: 1
+pool_kernel_size: 2
+pool_stride_size: 2
+fcn_num_layer: 2
+fcn_size_layer: 8
+activation: 'relu'
+dropout: 0.5
+
